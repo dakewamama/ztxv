@@ -1,4 +1,21 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+use serde::{Deserialize, Serialize};
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+
+pub struct VerificationDetails {
+    pub proof_valid: bool,
+    pub nullifier_unused: bool,
+    pub mempool_seen: bool,
+    pub network_propagation: f64, // percentage of network nodes that have seen the transaction
+    pub estimated_finality_seconds: u64, //contemplating using u32
+}
+
+impl VerificationDetails {
+    pub fn is_valid(&self) -> bool {
+        self.proof_valid && self.nullifier_unused 
+    } //&& self.mempool_seen
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ConfidenceLevel {
     Low,
     Medium,
@@ -48,5 +65,33 @@ mod tests {
         assert_eq!(ConfidenceLevel::from_score(90.0), ConfidenceLevel::Medium);
         assert_eq!(ConfidenceLevel::from_score(97.0), ConfidenceLevel::High);
         assert_eq!(ConfidenceLevel::from_score(99.5), ConfidenceLevel::Confirmed);
+    }
+
+    #[test]
+    fn test_verification_details_all_valid() {
+        // if all checks pass, is_valid should return true
+        let details = VerificationDetails {
+            proof_valid: true,
+            nullifier_unused: true,
+            mempool_seen: true,
+            network_propagation: 0.95,
+            estimated_finality_seconds: 25,
+        };
+
+        assert!(details.is_valid());
+    }
+
+    #[test] 
+    fn test_verification_details_invalid_proof() {
+        //returns false if proof is invalid
+        let details = VerificationDetails {
+            proof_valid: false,
+            nullifier_unused: true,
+            mempool_seen: true,
+            network_propagation: 0.95,
+            estimated_finality_seconds: 25,
+        };
+
+        assert!(!details.is_valid());
     }
 }
