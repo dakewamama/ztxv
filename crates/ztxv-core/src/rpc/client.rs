@@ -80,9 +80,8 @@ impl ZcashRpcClient {
     }
 
     // Check if a nullifier has been spent
-    pub async fn is_nullifier_spent(&self, nullifier: &str) -> Result<bool> {
-        // This is a placeholder - actual implementation depends on Zcash RPC methods
-        // We'll implement this properly when we have access to a real node
+    pub async fn is_nullifier_spent(&self, _nullifier: &str) -> Result<bool> {
+        //todo 
         Ok(false)
     }
 }
