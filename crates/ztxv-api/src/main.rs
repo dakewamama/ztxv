@@ -1,3 +1,4 @@
+mod websocket;
 use axum::{
     extract::{Path, State},
     http::StatusCode,
@@ -45,6 +46,7 @@ async fn main() {
     .route("/health", get(health))
     .route("/verify/:tx_hash", get(verify_tx))
     .route("/verify", post(verify_tx_post))
+    .route("/ws", get(websocket::ws_handler))
     .layer(CorsLayer::permissive())
     .with_state(state);
 

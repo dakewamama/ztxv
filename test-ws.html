@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>ztxv WebSocket Test</h1>
+    <button onclick="test()">Test WebSocket</button>
+    <div id="output" style="white-space: pre-wrap; font-family: monospace;"></div>
+
+    <script>
+        function test() {
+            const output = document.getElementById('output');
+            output.textContent = 'Connecting...\n';
+            
+            const ws = new WebSocket('ws://localhost:3000/ws');
+            
+            ws.onopen = () => {
+                output.textContent += 'Connected!\n';
+                const txHash = '0d19877eb803b3806f640d2eeb89572ca8d2f68a26f1b6e1b1cccc6b6e9e0e2e';
+                ws.send(txHash);
+                output.textContent += 'Sent tx hash\n\n';
+            };
+            
+            ws.onmessage = (event) => {
+                output.textContent += event.data + '\n\n';
+            };
+            
+            ws.onerror = (err) => {
+                output.textContent += 'ERROR\n';
+            };
+        }
+    </script>
+</body>
+</html>
