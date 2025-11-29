@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Glass Card */
+  .glass-card {
+    @apply rounded-3xl bg-gradient-to-br from-gray-900/40 to-gray-800/20 backdrop-blur-xl border border-gray-700/50;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Glass Input */
+  .glass-input {
+    @apply px-5 py-4 rounded-2xl bg-black/30 border border-gray-700/50 text-white placeholder-gray-500;
+    @apply focus:border-zcash-green/50 focus:outline-none focus:ring-2 focus:ring-zcash-green/20;
+    @apply backdrop-blur-sm transition-all duration-300;
+  }
+
+  /* Glass Buttons */
+  .glass-button {
+    @apply py-4 rounded-2xl bg-white/5 border border-gray-700/50 text-white font-medium;
+    @apply hover:bg-white/10 hover:border-gray-600/50 transition-all duration-300;
+    @apply backdrop-blur-sm;
+  }
+
+  .glass-button-primary {
+    @apply w-full py-5 rounded-2xl bg-zcash-green text-black font-bold text-lg;
+    @apply hover:bg-zcash-green/90 transition-all duration-300;
+    @apply disabled:bg-gray-800 disabled:text-gray-600 disabled:cursor-not-allowed;
+    @apply shadow-lg shadow-zcash-green/20 hover:shadow-xl hover:shadow-zcash-green/30;
+  }
+
+  /* Glass Error */
+  .glass-error {
+    @apply flex items-center gap-3 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400;
+    @apply backdrop-blur-sm mb-6;
+  }
+
+  /* Glass Result */
+  .glass-result {
+    @apply p-8 rounded-3xl bg-gradient-to-br from-black/50 to-gray-900/30 border-2 border-zcash-green/30;
+    @apply backdrop-blur-md;
+    box-shadow: 
+      0 0 60px rgba(0, 255, 148, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Status Indicator */
+  .status-indicator {
+    @apply w-6 h-6 rounded-full relative;
+  }
+
+  .status-valid {
+    @apply bg-zcash-green;
+    box-shadow: 
+      0 0 20px rgba(0, 255, 148, 0.5),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .status-invalid {
+    @apply bg-red-500;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  }
+
+  /* Stat Cards */
+  .stat-card {
+    @apply p-6 rounded-2xl bg-black/40 border border-gray-800/50 backdrop-blur-sm;
+  }
+
+  .stat-label {
+    @apply text-gray-400 text-sm mb-2;
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold mb-3;
+  }
+
+  .stat-bar {
+    @apply w-full h-2 bg-gray-800/50 rounded-full overflow-hidden;
+  }
+
+  .stat-bar-fill {
+    @apply h-full rounded-full transition-all duration-1000 ease-out;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  /* Details */
+  .glass-details {
+    @apply mt-6 pt-6 border-t border-gray-800/50 space-y-3;
+  }
+
+  .detail-row {
+    @apply flex justify-between items-center text-sm;
+  }
+
+  .detail-row > span:first-child {
+    @apply text-gray-400;
+  }
+
+  .detail-row > span:last-child {
+    @apply font-semibold;
+  }
+
+  /* Loading Spinner */
+  .loading-spinner {
+    @apply w-5 h-5 border-2 border-black/20 border-t-black rounded-full;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  margin: 0;
+  background: #0A0A0A;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
