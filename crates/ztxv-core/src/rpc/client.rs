@@ -83,7 +83,7 @@ impl ZcashRpcClient {
     pub async fn is_nullifier_spent(&self, _nullifier: &str) -> Result<bool> {
         //nullifier checking requires full node database access
         //standard rpc does not expose this 
-        //so for now we check if tx was confirmed that can give us an implicit nullifier validation
+        //so for now we check if tx was confirmed that can give us an implicit nullifier 
         Ok(false)
     }
 }

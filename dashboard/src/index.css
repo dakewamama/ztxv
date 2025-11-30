@@ -7,6 +7,34 @@
     animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
+  .fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .fade-in-scale {
+    animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .fade-in-delay-1 {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+
+  .fade-in-delay-2 {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  }
+
+  .fade-in-delay-3 {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  }
+
+  .fade-in-delay-4 {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+  }
+
+  .fade-in-delay-5 {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  }
+
   /* Glass Card */
   .glass-card {
     @apply rounded-3xl bg-gradient-to-br from-gray-900/40 to-gray-800/20 backdrop-blur-xl border border-gray-700/50;
@@ -42,72 +70,6 @@
     @apply backdrop-blur-sm mb-6;
   }
 
-  /* Glass Result */
-  .glass-result {
-    @apply p-8 rounded-3xl bg-gradient-to-br from-black/50 to-gray-900/30 border-2 border-zcash-green/30;
-    @apply backdrop-blur-md;
-    box-shadow: 
-      0 0 60px rgba(0, 255, 148, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  }
-
-  /* Status Indicator */
-  .status-indicator {
-    @apply w-6 h-6 rounded-full relative;
-  }
-
-  .status-valid {
-    @apply bg-zcash-green;
-    box-shadow: 
-      0 0 20px rgba(0, 255, 148, 0.5),
-      inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .status-invalid {
-    @apply bg-red-500;
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-  }
-
-  /* Stat Cards */
-  .stat-card {
-    @apply p-6 rounded-2xl bg-black/40 border border-gray-800/50 backdrop-blur-sm;
-  }
-
-  .stat-label {
-    @apply text-gray-400 text-sm mb-2;
-  }
-
-  .stat-value {
-    @apply text-4xl font-bold mb-3;
-  }
-
-  .stat-bar {
-    @apply w-full h-2 bg-gray-800/50 rounded-full overflow-hidden;
-  }
-
-  .stat-bar-fill {
-    @apply h-full rounded-full transition-all duration-1000 ease-out;
-    box-shadow: 0 0 10px currentColor;
-  }
-
-  /* Details */
-  .glass-details {
-    @apply mt-6 pt-6 border-t border-gray-800/50 space-y-3;
-  }
-
-  .detail-row {
-    @apply flex justify-between items-center text-sm;
-  }
-
-  .detail-row > span:first-child {
-    @apply text-gray-400;
-  }
-
-  .detail-row > span:last-child {
-    @apply font-semibold;
-  }
-
   /* Loading Spinner */
   .loading-spinner {
     @apply w-5 h-5 border-2 border-black/20 border-t-black rounded-full;
@@ -115,14 +77,178 @@
   }
 }
 
+/* JSON Display Styles */
+.json-container {
+  @apply font-mono text-sm rounded-3xl bg-black/60 border-2 border-zcash-green/30 p-6 md:p-8;
+  @apply backdrop-blur-md overflow-hidden;
+  box-shadow: 
+    0 0 80px rgba(0, 255, 148, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  line-height: 1.8;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.json-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.json-status-badge {
+  @apply flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-gray-700/50;
+}
+
+.status-dot-valid {
+  @apply w-2 h-2 rounded-full bg-zcash-green;
+  box-shadow: 0 0 8px rgba(0, 255, 148, 0.8);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.status-dot-invalid {
+  @apply w-2 h-2 rounded-full bg-red-500;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+}
+
+.json-body {
+  @apply pl-4;
+}
+
+.json-nested {
+  @apply pl-6 border-l-2 border-gray-800/50 ml-2;
+}
+
+.json-line {
+  @apply relative mb-1 break-words;
+}
+
+.json-footer {
+  @apply mt-4;
+}
+
+.json-bracket {
+  @apply text-gray-500 font-bold text-lg;
+}
+
+.json-key {
+  @apply text-blue-400 mr-2;
+}
+
+.json-colon {
+  @apply text-gray-600 mr-2;
+}
+
+.json-comma {
+  @apply text-gray-600 ml-1;
+}
+
+.json-string {
+  @apply text-orange-400;
+}
+
+.json-string-success {
+  @apply text-zcash-green font-bold;
+  text-shadow: 0 0 10px rgba(0, 255, 148, 0.3);
+}
+
+.json-string-warning {
+  @apply text-yellow-400 font-bold;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+}
+
+.json-string-pending {
+  @apply text-gray-400;
+}
+
+.json-number {
+  @apply text-purple-400 font-semibold;
+}
+
+.json-boolean-true {
+  @apply text-zcash-green font-bold;
+  text-shadow: 0 0 10px rgba(0, 255, 148, 0.4);
+}
+
+.json-boolean-false {
+  @apply text-red-500 font-bold;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.json-comment {
+  @apply text-gray-600 italic ml-2 text-xs;
+}
+
+/* Enhanced Progress Bars */
+.progress-bar-container {
+  @apply mt-3 mb-2 ml-0 p-4 rounded-xl bg-black/40 border border-gray-800/50;
+  max-width: 100%;
+}
+
+.progress-bar-header {
+  @apply flex justify-between items-center mb-2;
+}
+
+.progress-label {
+  @apply text-xs font-bold tracking-wider;
+}
+
+.progress-percentage {
+  @apply text-sm font-mono text-gray-400;
+}
+
+.progress-bar-track {
+  @apply relative h-6 bg-gray-900/80 rounded-full overflow-hidden border border-gray-800/50;
+}
+
+.progress-bar-fill {
+  @apply relative h-full rounded-full transition-all duration-1000 ease-out;
+  box-shadow: 0 0 20px currentColor;
+}
+
+.progress-bar-green {
+  @apply bg-gradient-to-r from-zcash-green/80 to-zcash-green;
+}
+
+.progress-bar-blue {
+  @apply bg-gradient-to-r from-blue-500/80 to-blue-500;
+}
+
+.progress-threshold {
+  @apply absolute top-0 bottom-0 w-0.5 bg-gray-700/50;
+}
+
+.progress-threshold-label {
+  @apply absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-gray-500 whitespace-nowrap;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -146,4 +272,11 @@ body {
   background: #0A0A0A;
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Scramble text effect */
+.scramble-text {
+  @apply font-mono;
+  letter-spacing: 0.05em;
 }
