@@ -269,7 +269,7 @@ export default function Verifier() {
 
         {error && (
           <div className="glass-error fade-in">
-            <span className="text-lg">⚠️</span>
+            <span className="text-lg">error: </span>
             <p>{error}</p>
           </div>
         )}

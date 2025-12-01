@@ -9,13 +9,13 @@ use axum::{
 
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
-use ztxv_core::{TransactionVerifier, VerificationResult};
+use ztxv_core::{TransactionVerifier, VerificationResult, multi_rpc::MultiRpcVerifier};
 use tower_http::cors::CorsLayer;
-
 
 #[derive(Clone)]
 struct AppState {
     verifier: Arc<TransactionVerifier>,
+    consensus_verifier: Arc<MultiRpcVerifier>,
 }
 
 #[derive(Deserialize)]
@@ -39,16 +39,22 @@ async fn main() {
         .unwrap_or_else(|_| "http://localhost:8232".to_string());
 
     let verifier = Arc::new(TransactionVerifier::new(rpc_url));
-    let state = AppState { verifier };
+    let consensus_verifier = Arc::new(MultiRpcVerifier::new());
+    
+    let state = AppState { 
+        verifier,
+        consensus_verifier,
+    };
 
     let app = Router::new()
-    .route("/", get(root))
-    .route("/health", get(health))
-    .route("/verify/:tx_hash", get(verify_tx))
-    .route("/verify", post(verify_tx_post))
-    .route("/ws", get(websocket::ws_handler))
-    .layer(CorsLayer::permissive())
-    .with_state(state);
+        .route("/", get(root))
+        .route("/health", get(health))
+        .route("/verify/:tx_hash", get(verify_tx))
+        .route("/verify", post(verify_tx_post))
+        .route("/verify-consensus/:tx_hash", get(verify_consensus))
+        .route("/ws", get(websocket::ws_handler))
+        .layer(CorsLayer::permissive())
+        .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await
@@ -60,7 +66,7 @@ async fn main() {
 }
 
 async fn root() -> &'static str {
-    "ztxv API >>> Zcash Transaction verification from stauroX"
+    "ztxv API - Zcash Transaction Verification"
 }
 
 async fn health() -> impl IntoResponse {
@@ -111,6 +117,30 @@ async fn verify_tx_post(
         Err(e) => (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(ApiResponse::<VerificationResult> {
+                success: false,
+                data: None,
+                error: Some(e.to_string()),
+            }),
+        ),
+    }
+}
+
+async fn verify_consensus(
+    State(state): State<AppState>,
+    Path(tx_hash): Path<String>,
+) -> impl IntoResponse {
+    match state.consensus_verifier.verify(&tx_hash).await {
+        Ok(result) => (
+            StatusCode::OK,
+            Json(ApiResponse {
+                success: true,
+                data: Some(result),
+                error: None,
+            }),
+        ),
+        Err(e) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(ApiResponse {
                 success: false,
                 data: None,
                 error: Some(e.to_string()),
