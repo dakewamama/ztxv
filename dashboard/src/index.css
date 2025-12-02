@@ -280,3 +280,60 @@ body {
   @apply font-mono;
   letter-spacing: 0.05em;
 }
+
+/* New Transaction Animation */
+.new-tx-animation {
+  animation: newTxPulse 2s ease-out;
+}
+
+@keyframes newTxPulse {
+  0% {
+    transform: scale(0.95) translateX(-20px);
+    opacity: 0;
+    border-color: rgba(0, 255, 148, 0.8);
+    box-shadow: 0 0 30px rgba(0, 255, 148, 0.5);
+  }
+  50% {
+    border-color: rgba(0, 255, 148, 0.4);
+  }
+  100% {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+    border-color: rgba(55, 65, 81, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Scramble Animation for TX Hash */
+.scramble-animation {
+  animation: scrambleGlow 2s ease-out;
+}
+
+@keyframes scrambleGlow {
+  0%, 100% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(0, 255, 148, 0.6);
+    color: #00FF94;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 148, 0.3);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 148, 0.5);
+}
